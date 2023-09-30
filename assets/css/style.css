@@ -99,6 +99,10 @@ main button:active {
   display: none;
 }
 
+#game-end {
+  display: none;
+}
+
 .body-section * {
   margin-bottom: 10px;
 }
