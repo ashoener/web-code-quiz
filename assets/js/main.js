@@ -200,6 +200,7 @@ function toggleElementDisplay(el) {
 }
 
 viewScoresButton.addEventListener("click", (e) => {
+  e.preventDefault();
   if (!scoreDisplayEl.classList.contains("hidden")) return;
   if (game.started || !game.ended) return;
   game.loadScores();
