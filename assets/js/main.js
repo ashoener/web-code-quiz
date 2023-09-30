@@ -35,6 +35,9 @@ const gameEndEl = document.getElementById("game-end");
 const answerTypeEl = document.getElementById("answer-type");
 const answerStateEl = document.getElementById("answer-state");
 const finalScoreEl = document.getElementById("final-score");
+const gameEndFormEl = document.getElementById("game-end-form");
+const initialsEl = document.getElementById("initials");
+const gameEndFormButton = gameEndFormEl.querySelector("button");
 
 const game = {
   started: false,
@@ -117,3 +120,18 @@ function toggleElementDisplay(el) {
 }
 
 startButton.addEventListener("click", () => game.start());
+initialsEl.addEventListener("keydown", (e) => {
+  e.preventDefault();
+  if (e.key == "Backspace" && initialsEl.value.length) {
+    initialsEl.value = initialsEl.value.slice(0, -1);
+  }
+  if (initialsEl.value.length == initialsEl.maxLength) return;
+  const key = e.key.toUpperCase();
+  if (key.length > 1) return;
+  if (!key.match(/[A-Z]/)) return;
+  initialsEl.value += key;
+});
+gameEndFormButton.addEventListener("click", (e) => {
+  e.preventDefault();
+  if (initialsEl.value.length != 2) return;
+});
