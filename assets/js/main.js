@@ -49,14 +49,20 @@ const game = {
   start() {
     if (this.started) return;
     this.started = true;
+    //   10 seconds per question
     this.timer = questions.length * 10;
     this.updateTimer();
+    //   Hide game header
     toggleElementDisplay(mainHeaderEl);
+    //   Show questions
     toggleElementDisplay(questionsEl);
     game.showQuestion(0);
+    //   Update the timer every second
     this.gameInterval = setInterval(() => {
       this.timer--;
       this.updateTimer();
+      // End game when timer reaches 0
+      if (this.timer == 0) this.end();
     }, 1000);
   },
   end() {
@@ -64,9 +70,12 @@ const game = {
     this.started = false;
     clearInterval(this.gameInterval);
     finalScoreEl.innerText = this.timer;
+    //   Hide questions
     toggleElementDisplay(questionsEl);
+    //   Show end game screen
     toggleElementDisplay(gameEndEl);
   },
+  //   Update timer in the header
   updateTimer() {
     timeRemainingEl.innerText = this.timer;
   },
@@ -129,8 +138,14 @@ const game = {
   },
   saveScore(initials) {
     this.loadScores();
-    //   Maximum of 5 scores
-    if (this.scores.length == 5) this.scores.pop();
+    this.sortScores();
+    //   Maximum of 5 scores.
+    //   Remove lowest score if it is lower than this one
+    //   Otherwise, no changes are needed
+    if (this.scores.length == 5) {
+      if (this.scores[this.scores.length - 1].score > this.timer) return;
+      this.scores.pop();
+    }
     this.scores.push({ initials, score: this.timer });
     this.sortScores();
     //   Save scores to localStorage
