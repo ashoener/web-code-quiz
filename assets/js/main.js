@@ -34,12 +34,38 @@ const questionsList = questionsEl.querySelector("ol");
 const gameEndEl = document.getElementById("game-end");
 const answerTypeEl = document.getElementById("answer-type");
 const answerStateEl = document.getElementById("answer-state");
+const finalScoreEl = document.getElementById("final-score");
 
 const game = {
   started: false,
   question: 0,
   timer: 0,
-  start() {},
+  gameInterval: 0,
+  answerStateTimeout: 0,
+  start() {
+    if (this.started) return;
+    this.started = true;
+    this.timer = questions.length * 10;
+    this.updateTimer();
+    toggleElementDisplay(mainHeaderEl);
+    toggleElementDisplay(questionsEl);
+    game.showQuestion(0);
+    this.gameInterval = setInterval(() => {
+      this.timer--;
+      this.updateTimer();
+    }, 1000);
+  },
+  end() {
+    if (!this.started) return;
+    this.started = false;
+    clearInterval(this.gameInterval);
+    finalScoreEl.innerText = this.timer;
+    toggleElementDisplay(questionsEl);
+    toggleElementDisplay(gameEndEl);
+  },
+  updateTimer() {
+    timeRemainingEl.innerText = this.timer;
+  },
   showQuestion(index) {
     this.question = index;
     const question = questions[index];
@@ -60,13 +86,26 @@ const game = {
   answerQuestion(id) {
     const correct = questions[this.question].correct == id;
     answerStateEl.innerText = correct ? "Correct!" : "Wrong!";
-    toggleElementDisplay(answerTypeEl);
-    if (!correct) this.timer -= 10;
-    if (this.timer <= 0) {
-      this.timer += 10;
-      //   TODO: game over
+    if (!this.answerStateTimeout) toggleElementDisplay(answerTypeEl);
+    if (!correct) {
+      this.timer -= 10;
+      if (this.timer <= 0) {
+        this.timer += 10;
+        this.end();
+      }
+      this.updateTimer();
     }
-    //   TODO: properly hide after timeout
+    if (this.answerStateTimeout) clearTimeout(this.answerStateTimeout);
+    this.answerStateTimeout = setTimeout(() => {
+      toggleElementDisplay(answerTypeEl);
+      this.answerStateTimeout = 0;
+    }, 1000);
+    if (this.question == questions.length - 1) {
+      this.end();
+    } else {
+      this.question++;
+      this.showQuestion(this.question);
+    }
   },
 };
 
@@ -77,5 +116,4 @@ function toggleElementDisplay(el) {
   el.classList.toggle("hidden");
 }
 
-toggleElementDisplay(questionsEl);
-game.showQuestion(0);
+startButton.addEventListener("click", () => game.start());
