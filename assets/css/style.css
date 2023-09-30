@@ -73,8 +73,25 @@ main {
   display: block;
 }
 
+#main-body button.inline {
+  display: inline-block;
+  margin-top: 0px;
+}
+
 #main-body button:active {
   box-shadow: 0 0 0 2px var(--light-primary-color) inset;
+}
+
+#wrong-answer {
+  margin-top: 5px;
+  border-top: 1px solid var(--divider-color);
+  padding: 5px 0;
+  display: none;
+}
+
+#wrong-answer h3 {
+  color: var(--secondary-text);
+  font-style: italic;
 }
 
 @media screen and (max-width: 768px) {
