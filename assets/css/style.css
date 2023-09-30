@@ -62,7 +62,6 @@ main {
 
 main p {
   line-height: 1.5em;
-  font-weight: 600;
 }
 
 main button {
@@ -90,6 +89,10 @@ main button:active {
 
 #main-header * {
   padding-bottom: 10px;
+}
+
+#main-header p {
+  font-weight: 600;
 }
 
 #game-questions {
