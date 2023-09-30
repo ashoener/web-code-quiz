@@ -39,6 +39,7 @@ const game = {
   started: false,
   question: 0,
   timer: 0,
+  start() {},
   showQuestion(index) {
     this.question = index;
     const question = questions[index];
@@ -56,7 +57,17 @@ const game = {
       questionsList.appendChild(li);
     }
   },
-  answerQuestion(id) {},
+  answerQuestion(id) {
+    const correct = questions[this.question].correct == id;
+    answerStateEl.innerText = correct ? "Correct!" : "Wrong!";
+    toggleElementDisplay(answerTypeEl);
+    if (!correct) this.timer -= 10;
+    if (this.timer <= 0) {
+      this.timer += 10;
+      //   TODO: game over
+    }
+    //   TODO: properly hide after timeout
+  },
 };
 
 /**
