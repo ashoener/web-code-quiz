@@ -38,6 +38,10 @@ const finalScoreEl = document.getElementById("final-score");
 const gameEndFormEl = document.getElementById("game-end-form");
 const initialsEl = document.getElementById("initials");
 const gameEndFormButton = gameEndFormEl.querySelector("button");
+const scoreDisplayEl = document.getElementById("score-display");
+const scoresList = scoreDisplayEl.querySelector("ol");
+const restartGameButton = document.getElementById("restart-game");
+const clearHighscoresButton = document.getElementById("clear-highscores");
 
 const game = {
   started: false,
@@ -148,8 +152,26 @@ const game = {
     }
     this.scores.push({ initials, score: this.timer });
     this.sortScores();
+    this.saveScores();
+    this.updateScoreDisplay();
+  },
+  saveScores() {
     //   Save scores to localStorage
     localStorage.setItem("scores", JSON.stringify(this.scores));
+  },
+  resetScores() {
+    this.scores = [];
+    this.saveScores();
+    this.updateScoreDisplay();
+  },
+  updateScoreDisplay() {
+    //   Reset questions list
+    scoresList.innerHTML = "";
+    for (let score of this.scores) {
+      const li = document.createElement("li");
+      li.innerText = `${score.initials} - ${score.score}`;
+      scoresList.appendChild(li);
+    }
   },
 };
 
@@ -163,6 +185,7 @@ function toggleElementDisplay(el) {
 
 // Start the game when the start button is clicked
 startButton.addEventListener("click", () => game.start());
+
 initialsEl.addEventListener("keydown", (e) => {
   // Prevent keys from being added normally
   e.preventDefault();
@@ -179,9 +202,13 @@ initialsEl.addEventListener("keydown", (e) => {
   // Add key to input
   initialsEl.value += key;
 });
+
 gameEndFormButton.addEventListener("click", (e) => {
   e.preventDefault();
   if (initialsEl.value.length != 2) return;
   // Save initials to database
   game.saveScore(initialsEl.value);
 });
+
+restartGameButton.addEventListener("click", (e) => location.reload());
+clearHighscoresButton.addEventListener("click", (e) => game.resetScores());

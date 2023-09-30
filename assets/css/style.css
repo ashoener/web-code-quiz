@@ -114,6 +114,10 @@ main button:active {
   font-style: italic;
 }
 
+#score-display ol {
+  list-style: decimal inside;
+}
+
 #score-display li {
   background-color: var(--light-primary-color);
   margin: 0;
