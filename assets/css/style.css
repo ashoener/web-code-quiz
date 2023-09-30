@@ -19,6 +19,9 @@
 body {
   font-size: 16px;
   color: var(--primary-text);
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
 h1 {
@@ -39,9 +42,30 @@ a {
 }
 
 header {
-  flex: 0 0 100%;
+  flex: 0 0 60px;
   background-color: var(--light-primary-color);
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  padding: 0 10px;
+  margin-bottom: 20px;
+}
+
+main {
+  flex: 0 0 100%;
+  width: 60%;
+  align-self: center;
+  display: flex;
+  flex-direction: column;
   padding: 10px;
+}
+
+#main-header {
+  padding: 10px 0;
+}
+
+@media screen and (max-width: 768px) {
+  main {
+    width: 100%;
+  }
 }
