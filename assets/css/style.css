@@ -95,11 +95,7 @@ main button:active {
   font-weight: 600;
 }
 
-#game-questions {
-  display: none;
-}
-
-#game-end {
+.hidden {
   display: none;
 }
 
@@ -111,7 +107,6 @@ main button:active {
   margin-top: 5px;
   border-top: 1px solid var(--divider-color);
   padding: 5px 0;
-  display: none;
 }
 
 #answer-type h3 {
