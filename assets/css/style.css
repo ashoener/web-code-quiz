@@ -114,6 +114,16 @@ main button:active {
   font-style: italic;
 }
 
+#score-display li {
+  background-color: var(--light-primary-color);
+  margin: 0;
+  padding: 5px;
+}
+
+#score-display li:nth-of-type(even) {
+  background-color: white;
+}
+
 @media screen and (max-width: 768px) {
   main {
     width: 100%;
