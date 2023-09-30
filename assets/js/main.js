@@ -1,27 +1,37 @@
 const questions = [
   {
-    name: "Question 1",
-    answers: ["Answer 1", "Answer 2", "Answer 3", "Answer 4"],
-    correct: 0,
-  },
-  {
-    name: "Question 2",
-    answers: ["Answer 1", "Answer 2", "Answer 3", "Answer 4"],
+    name: "What kind of object does the document.querySelector() method return?",
+    answers: ["String", "HTMLElement", "Array", "Boolean"],
     correct: 1,
   },
   {
-    name: "Question 3",
-    answers: ["Answer 1", "Answer 2", "Answer 3", "Answer 4"],
-    correct: 2,
-  },
-  {
-    name: "Question 4",
-    answers: ["Answer 1", "Answer 2", "Answer 3", "Answer 4"],
+    name: "Which method is used to display information in the javascript console?",
+    answers: [
+      "console.log",
+      "console.warn",
+      "console.error",
+      "All of the above",
+    ],
     correct: 3,
   },
   {
-    name: "Question 5",
-    answers: ["Answer 1", "Answer 2", "Answer 3", "Answer 4"],
+    name: "Which property of an array contains the amount of items inside?",
+    answers: ["count", "size", "length"],
+    correct: 2,
+  },
+  {
+    name: "Which method reloads the page?",
+    answers: [
+      "window.reload()",
+      "window.location.reload()",
+      "document.reload()",
+      "window.refresh()",
+    ],
+    correct: 1,
+  },
+  {
+    name: "Which method adds an item to an array?",
+    answers: ["push()", "unshift()", "add()", "pop()"],
     correct: 0,
   },
 ];
@@ -150,7 +160,10 @@ const game = {
     //   Remove lowest score if it is lower than this one
     //   Otherwise, no changes are needed
     if (this.scores.length == 5) {
-      if (this.scores[this.scores.length - 1].score > this.timer) return;
+      if (this.scores[this.scores.length - 1].score > this.timer) {
+        this.updateScoreDisplay();
+        return;
+      }
       this.scores.pop();
     }
     this.scores.push({ initials, score: this.timer });
