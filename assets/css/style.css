@@ -53,18 +53,19 @@ header {
 
 main {
   flex: 0 0 100%;
-  width: 60%;
+  width: 40%;
   align-self: center;
   display: flex;
   flex-direction: column;
   padding: 10px;
 }
 
-#main-header {
-  padding: 10px 0;
+main p {
+  line-height: 1.5em;
+  font-weight: 600;
 }
 
-#main-body button {
+main button {
   border: none;
   background-color: var(--accent-color);
   color: var(--text-icons);
@@ -73,13 +74,30 @@ main {
   display: block;
 }
 
-#main-body button.inline {
+main button.inline {
   display: inline-block;
   margin-top: 0px;
 }
 
-#main-body button:active {
+main button:active {
   box-shadow: 0 0 0 2px var(--light-primary-color) inset;
+}
+
+#main-header {
+  padding: 10px 0;
+  text-align: center;
+}
+
+#main-header * {
+  padding-bottom: 10px;
+}
+
+#main-body {
+  display: none;
+}
+
+#main-body * {
+  margin-bottom: 10px;
 }
 
 #answer-type {
