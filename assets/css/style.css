@@ -64,6 +64,19 @@ main {
   padding: 10px 0;
 }
 
+#main-body button {
+  border: none;
+  background-color: var(--accent-color);
+  color: var(--text-icons);
+  padding: 5px 10px;
+  margin: 5px 0;
+  display: block;
+}
+
+#main-body button:active {
+  box-shadow: 0 0 0 2px var(--light-primary-color) inset;
+}
+
 @media screen and (max-width: 768px) {
   main {
     width: 100%;
