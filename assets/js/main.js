@@ -45,6 +45,7 @@ const game = {
   timer: 0,
   gameInterval: 0,
   answerStateTimeout: 0,
+  scores: {},
   start() {
     if (this.started) return;
     this.started = true;
@@ -110,6 +111,21 @@ const game = {
       this.showQuestion(this.question);
     }
   },
+  loadScores() {
+    const scores = JSON.parse(localStorage.getItem("scores"));
+    this.scores = scores ? scores : [];
+    this.sortScores();
+  },
+  sortScores() {
+    this.scores.sort((a, b) => a.score - b.score);
+  },
+  saveScore(initials) {
+    this.loadScores();
+    if (this.scores.length == 5) this.scores.pop();
+    this.scores.push({ initials, score: this.timer });
+    this.sortScores();
+    localStorage.setItem("scores", JSON.stringify(this.scores));
+  },
 };
 
 /**
@@ -134,4 +150,5 @@ initialsEl.addEventListener("keydown", (e) => {
 gameEndFormButton.addEventListener("click", (e) => {
   e.preventDefault();
   if (initialsEl.value.length != 2) return;
+  game.saveScore(initialsEl.value);
 });
