@@ -26,6 +26,7 @@ const questions = [
   },
 ];
 
+const viewScoresButton = document.getElementById("view-scores");
 const timeRemainingEl = document.getElementById("time-remaining");
 const mainHeaderEl = document.getElementById("main-header");
 const startButton = document.getElementById("start-game");
@@ -45,6 +46,7 @@ const clearHighscoresButton = document.getElementById("clear-highscores");
 
 const game = {
   started: false,
+  ended: true,
   question: 0,
   timer: 0,
   gameInterval: 0,
@@ -53,6 +55,7 @@ const game = {
   start() {
     if (this.started) return;
     this.started = true;
+    this.ended = false;
     //   10 seconds per question
     this.timer = questions.length * 10;
     this.updateTimer();
@@ -138,7 +141,7 @@ const game = {
   },
   //   Sort scores so the highest displays first
   sortScores() {
-    this.scores.sort((a, b) => a.score - b.score);
+    this.scores.sort((a, b) => b.score - a.score);
   },
   saveScore(initials) {
     this.loadScores();
@@ -183,6 +186,15 @@ function toggleElementDisplay(el) {
   el.classList.toggle("hidden");
 }
 
+viewScoresButton.addEventListener("click", (e) => {
+  if (!scoreDisplayEl.classList.contains("hidden")) return;
+  if (game.started || !game.ended) return;
+  game.loadScores();
+  game.updateScoreDisplay();
+  toggleElementDisplay(scoreDisplayEl);
+  toggleElementDisplay(mainHeaderEl);
+});
+
 // Start the game when the start button is clicked
 startButton.addEventListener("click", () => game.start());
 
@@ -208,6 +220,9 @@ gameEndFormButton.addEventListener("click", (e) => {
   if (initialsEl.value.length != 2) return;
   // Save initials to database
   game.saveScore(initialsEl.value);
+  game.ended = true;
+  toggleElementDisplay(scoreDisplayEl);
+  toggleElementDisplay(gameEndEl);
 });
 
 restartGameButton.addEventListener("click", (e) => location.reload());
