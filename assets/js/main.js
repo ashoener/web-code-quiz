@@ -238,5 +238,8 @@ gameEndFormButton.addEventListener("click", (e) => {
   toggleElementDisplay(gameEndEl);
 });
 
-restartGameButton.addEventListener("click", (e) => location.reload());
+restartGameButton.addEventListener("click", (e) => {
+  toggleElementDisplay(scoreDisplayEl);
+  toggleElementDisplay(mainHeaderEl);
+});
 clearHighscoresButton.addEventListener("click", (e) => game.resetScores());
